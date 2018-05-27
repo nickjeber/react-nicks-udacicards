@@ -1,21 +1,32 @@
 import React, { Component } from "react";
-import { fetchDecks } from "../../utils/api"
+import DeckItem from './DeckItem';
+import { fetchDecks } from "../../utils/api";
 import { StyleSheet, Text, View } from 'react-native';
 
 class DeckList extends Component {
 
-	componentDidMount() {
+	state = {
+		decks: []
+	}
 
+	componentDidMount() {
+		fetchDecks()
+		.then((decks) => {
+        this.setState({
+          decks: decks
+        })
+      })
 	}
 
 	render(){
-		return (
-			<View>
-				<Text>
-					Deck List
-				</Text>
+			return (
+				<View>
+				<Text>Deck List</Text>
+				<DeckItem />
+				<DeckItem />
+				<DeckItem />
 			</View>
-		)
+			)
 	}
 }
 
