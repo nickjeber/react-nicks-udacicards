@@ -34,3 +34,7 @@ function setData(){
 export const fetchDecks = () => 
   AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY)
     .then(decks => (decks ? JSON.parse(decks) : setData()))
+
+export const saveDeck = (deck) => 
+  AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify({[deck.title]:deck}))
+

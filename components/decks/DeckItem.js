@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 class DeckItem extends Component {
-
+	handleNewDeckNavigation = () => {
+		this.props.navigation.navigate("DeckNew")
+	}
 	render(){
 		const {deck} = this.props
 		return (
@@ -15,7 +17,10 @@ class DeckItem extends Component {
 					 {deck.questions.length} Cards
 				</Text>
 				<View style={styles.buttonContainer}>
-					<TouchableOpacity style={[styles.button, styles.addButton]}>
+					<TouchableOpacity 
+						style={[styles.button, styles.addButton]}
+						onPress={() => this.handleNewDeckNavigation()}
+					>
 						<Text style={styles.addButtonText}>
 							Add Card
 						</Text>

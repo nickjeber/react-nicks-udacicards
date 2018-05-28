@@ -1,8 +1,35 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { addDeck } from '../../actions/decks';
+import { saveDeck } from "../../utils/api";
 
 class DeckNew extends Component {
+
+	state = {
+		title: ''
+	}
+
+	handleChange = deckTitle => {
+		this.setState(() => (
+			{title: deckTitle}
+		))
+	}
+
+	handleSubmit = () => {
+		const { title } = this.state
+		const { dispatch, navigation } = this.props
+
+		const deck = {
+			title,
+			questions: []
+		}
+
+		saveDeck(deck)
+		.then(dispatch(addDeck(deck)))
+		.then(navigation.navigate("DeckList"))
+	}
+
 	render(){
 		return (
 			<View>
@@ -12,8 +39,15 @@ class DeckNew extends Component {
 				<View style={styles.deck}>
 					<TextInput 
 						style={styles.input}
-						underlineColorAndroid="transparent" />
-					<TouchableOpacity style={[styles.button, styles.submitButton]}>
+						underlineColorAndroid="transparent" 
+						onChangeText={this.handleChange}
+						value={this.state.title}
+					/>
+					<TouchableOpacity 
+						style={[styles.button, styles.submitButton]}
+						disabled={this.state.title.length > 1 ? false : true}
+						onPress={this.handleSubmit}
+					>
 						<Text style={styles.submitButtonText}>
 							Submit
 						</Text>
