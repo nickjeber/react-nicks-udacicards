@@ -4,7 +4,7 @@ import { receiveDecks } from '../../actions/decks';
 import { AppLoading} from 'expo'
 import DeckItem from './DeckItem';
 import { fetchDecks } from "../../utils/api";
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 
 class DeckList extends Component {
 
@@ -17,6 +17,12 @@ class DeckList extends Component {
 		fetchDecks()
 		.then((decks) => dispatch(receiveDecks(decks)))
 		.then(() => this.setState(() => ({ready: true})))
+	}
+
+	handleDeckNavigation = title => {
+		this.props.navigation.navigate("DeckItem",{
+			deckName: title
+		})
 	}
 
 	render(){
@@ -32,14 +38,16 @@ class DeckList extends Component {
 				<FlatList
 				data={decks}
 				renderItem={({ item }) => (
-					<View style={styles.deck}>
-						<Text style={styles.deckTitle}>
-							{item.title}
-						</Text>
-						<Text style={styles.deckCount}>
-							 {item.questions.length} cards
-						</Text>
-					</View>
+					<TouchableOpacity onPress={() => this.handleDeckNavigation(item.title)}>
+						<View style={styles.deck}>
+							<Text style={styles.deckTitle}>
+								{item.title}
+							</Text>
+							<Text style={styles.deckCount}>
+								 {item.questions.length} cards
+							</Text>
+						</View>
+					</TouchableOpacity>
 				)}
 				keyExtractor={item => item.title}
 				/>

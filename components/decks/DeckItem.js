@@ -8,10 +8,10 @@ class DeckItem extends Component {
 		return (
 			<View style={styles.deck}>
 				<Text style={styles.deckTitle}>
-					{title}
+					Deck Item
 				</Text>
 				<Text style={styles.deckCount}>
-					{questions.length} cards
+					 cards
 				</Text>
 			</View>
 		)

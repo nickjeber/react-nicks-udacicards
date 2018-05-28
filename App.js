@@ -4,8 +4,9 @@ import { Provider } from 'react-redux';
 import reducer from './reducers';
 import Navbar from './components/navigation/Navbar'
 import DeckList from './components/decks/DeckList';
+import DeckItem from './components/decks/DeckItem';
 import { StyleSheet, Text, View } from 'react-native';
-import { createMaterialTopTabNavigator } from 'react-navigation';
+import { createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation';
 
 const Tabs = createMaterialTopTabNavigator({
   Decks: {
@@ -37,26 +38,40 @@ const Tabs = createMaterialTopTabNavigator({
   }
 })
 
+const StackNavigator = createStackNavigator({
+  Home: {
+    screen: Tabs,
+    headerMode: "none",
+    header: null,
+    navigationOptions: {
+      header: null
+    }
+  },
+  DeckList: {
+    screen: DeckList
+  },
+  DeckItem: {
+    screen: DeckItem,
+    navigationOptions: {
+      title: "Back",
+      headerStyle: {
+        marginTop: -20
+      },
+    },
+  },
+})
+
 const store = createStore(reducer);
 
 export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <View style={{flex: 1, backgroundColor: '#f4f4f4'}}>
+        <View style={{flex: 1}}>
           <Navbar />
-          <Tabs />
+          <StackNavigator />
         </View>
       </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#eee',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
