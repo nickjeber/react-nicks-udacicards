@@ -23,12 +23,10 @@ const styles = StyleSheet.create({
 		color: '#ffffff',
 		fontSize: 20,
 	},
-	menu: {
+	icon: {
 		color: '#fff',
 	},
-	newMessage: {
-		color: '#fff',
-	}
+
 })
 
 export default function Navbar(){
@@ -36,15 +34,25 @@ export default function Navbar(){
     <View style={styles.navbar}>
     	<MaterialCommunityIcons
               name='menu'
-              style={styles.menu}
+              style={styles.icon}
               size={32}
             />
     	<Text style={styles.title}>
+    		<MaterialCommunityIcons
+              name='flash'
+              style={styles.icon}
+              size={18}
+            />
 	      Flashcards
+	      <MaterialCommunityIcons
+              name='flash'
+              style={styles.icon}
+              size={18}
+            />
 	    </Text>
 	    <Entypo
 	    	name='new-message'
-	    	style={styles.newMessage}
+	    	style={styles.icon}
 	    	size={25}
     	/>
     </View>
