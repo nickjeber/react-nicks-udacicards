@@ -38,3 +38,14 @@ export const fetchDecks = () =>
 export const saveDeck = (deck) => 
   AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify({[deck.title]:deck}))
 
+export const saveCard = (deck, card) =>
+  fetchDecks().then(decks => {
+    const fetchedDecks = {
+      ...decks,
+      [deck.title]: {
+        ...decks[deck.title],
+        questions: decks[deck.title].questions.concat([card])
+      }
+    }
+    return AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(fetchedDecks))
+  })

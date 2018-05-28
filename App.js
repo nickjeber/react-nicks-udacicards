@@ -6,6 +6,8 @@ import Navbar from './components/navigation/Navbar'
 import DeckList from './components/decks/DeckList';
 import DeckItem from './components/decks/DeckItem';
 import DeckNew from './components/decks/DeckNew';
+import CardNew from './components/cards/CardNew';
+import QuizItem from './components/quizzes/QuizItem';
 import { StyleSheet, Text, View } from 'react-native';
 import { createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation';
 
@@ -32,7 +34,19 @@ const StackNavigator = createStackNavigator({
     navigationOptions: {
       title: "Back",
     },
-  }
+  },
+  CardNew: {
+    screen: CardNew,
+    navigationOptions: {
+      title: "Back",
+    },
+  },
+  QuizItem: {
+    screen: QuizItem,
+    navigationOptions: {
+      title: "Back",
+    },
+  },
 })
 
 const store = createStore(reducer);

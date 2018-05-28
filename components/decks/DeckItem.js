@@ -3,8 +3,15 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 class DeckItem extends Component {
-	handleNewDeckNavigation = () => {
-		this.props.navigation.navigate("DeckNew")
+	handleNewCardNavigation = title => {
+		this.props.navigation.navigate("CardNew", {
+			deckTitle: title
+		})
+	}
+	handleStartQuizNavigation = title => {
+		this.props.navigation.navigate("QuizItem", {
+			deckTitle: title
+		})
 	}
 	render(){
 		const {deck} = this.props
@@ -19,13 +26,16 @@ class DeckItem extends Component {
 				<View style={styles.buttonContainer}>
 					<TouchableOpacity 
 						style={[styles.button, styles.addButton]}
-						onPress={() => this.handleNewDeckNavigation()}
-					>
+						onPress={() => this.handleNewCardNavigation(deck.title)}
+						>
 						<Text style={styles.addButtonText}>
 							Add Card
 						</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={[styles.button, styles.startButton]}>
+					<TouchableOpacity 
+						style={[styles.button, styles.startButton]}
+						onPress={() => this.handleStartQuizNavigation(deck.title)}
+						>
 						<Text style={styles.startButtonText}>
 							Start Quiz
 						</Text>

@@ -1,32 +1,27 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
-import { addDeck } from '../../actions/decks';
-import { saveDeck } from "../../utils/api";
+import { addCard } from '../../actions/decks';
+import { saveCard } from "../../utils/api";
 
-class DeckNew extends Component {
+class CardNew extends Component {
 
 	state = {
-		title: ''
-	}
-
-	handleChange = deckTitle => {
-		this.setState(() => (
-			{title: deckTitle}
-		))
+		question: '',
+		answer: ''
 	}
 
 	handleSubmit = () => {
-		const { title } = this.state
-		const { dispatch, navigation } = this.props
+		const { question, answer } = this.state
+		const { dispatch, navigation, deck } = this.props
 
-		const deck = {
-			title,
-			questions: []
+		const card = {
+			question,
+			answer
 		}
 
-		saveDeck(deck)
-		.then(dispatch(addDeck(deck)))
+		saveCard(deck, card)
+		.then(dispatch(addCard(deck, card)))
 		.then(navigation.pop())
 	}
 
@@ -34,18 +29,24 @@ class DeckNew extends Component {
 		return (
 			<View>
 				<Text style={styles.title}>
-					New Deck
+					New Card
 				</Text>
 				<View style={styles.deck}>
 					<TextInput 
 						style={styles.input}
 						underlineColorAndroid="transparent" 
-						onChangeText={this.handleChange}
-						value={this.state.title}
+						onChangeText={question => this.setState(() => ({ question }))}
+						value={this.state.question}
+					/>
+					<TextInput 
+						style={styles.input}
+						underlineColorAndroid="transparent" 
+						onChangeText={answer => this.setState(() => ({ answer }))}
+						value={this.state.answer}
 					/>
 					<TouchableOpacity 
 						style={[styles.button, styles.submitButton]}
-						disabled={this.state.title.length > 1 ? false : true}
+						disabled={this.state.question.length > 0 ? false : true}
 						onPress={this.handleSubmit}
 					>
 						<Text style={styles.submitButtonText}>
@@ -115,4 +116,11 @@ const styles = StyleSheet.create({
 	},
 })
 
-export default connect()(DeckNew);
+function mapStateToProps(state, { navigation }){
+	const deck = navigation.state.params.deckTitle;
+	return {
+		deck: state.decks[deck]
+	}
+}
+
+export default connect(mapStateToProps)(CardNew);
