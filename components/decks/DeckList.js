@@ -20,8 +20,8 @@ class DeckList extends Component {
 	}
 
 	handleDeckNavigation = title => {
-		this.props.navigation.navigate("DeckItem",{
-			deckName: title
+		this.props.navigation.navigate("DeckItem", {
+			deckTitle: title
 		})
 	}
 

@@ -1,31 +1,37 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View } from 'react-native';
+import { connect } from 'react-redux';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 class DeckItem extends Component {
 
 	render(){
-		const {title, questions} = this.props
+		const {deck} = this.props
 		return (
 			<View style={styles.deck}>
 				<Text style={styles.deckTitle}>
-					Deck Item
+					{deck.title}
 				</Text>
 				<Text style={styles.deckCount}>
-					 cards
+					 {deck.questions.length} Cards
 				</Text>
+				<View style={styles.buttonContainer}>
+					<TouchableOpacity style={[styles.button, styles.addButton]}>
+						<Text style={styles.addButtonText}>
+							Add Card
+						</Text>
+					</TouchableOpacity>
+					<TouchableOpacity style={[styles.button, styles.startButton]}>
+						<Text style={styles.startButtonText}>
+							Start Quiz
+						</Text>
+					</TouchableOpacity>
+				</View>
 			</View>
 		)
 	}
 }
 
 const styles = StyleSheet.create({
-	title: {
-		fontSize: 38,
-		fontWeight: "700",
-		marginLeft: '5%',
-		marginTop: 15,
-		marginBottom: 15
-	},
 	deck: {
 		backgroundColor: '#fff',
 		borderRadius: 16,
@@ -45,14 +51,54 @@ const styles = StyleSheet.create({
 	    },
 	},
 	deckTitle: {
-		fontSize: 32,
+		fontSize: 42,
 		color: '#011627',
 		fontWeight: '500'
 	},
 	deckCount: {
-		fontSize: 16,
+		fontSize: 22,
 		color: '#999'
-	}
+	},
+	buttonContainer: {
+		marginTop: 60
+	},
+	button: {
+		width: 200,
+		paddingTop: 20,
+		paddingBottom: 20,
+		marginTop: 10,
+		marginBottom: 10,
+		borderRadius: 30,
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	addButton: {
+		backgroundColor: 'transparent',
+		borderColor: '#FF9F1C',
+		borderWidth: 5,
+	},
+	addButtonText: {
+		color: '#FF9F1C',
+		fontSize: 20,
+		fontWeight: '500'
+	},
+	startButton: {
+		backgroundColor: '#2EC4B6',
+		borderColor: '#2EC4B6',
+		borderWidth: 5,
+	},
+	startButtonText: {
+		color: '#fff',
+		fontSize: 20,
+		fontWeight: '500'
+	},
 })
 
-export default DeckItem;
+function mapStateToProps(state, {navigation} ){
+	const deck = navigation.state.params.deckTitle;
+	return {
+		deck: state.decks[deck]
+	}
+}
+
+export default connect(mapStateToProps)(DeckItem);
