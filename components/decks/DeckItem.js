@@ -4,13 +4,14 @@ import { StyleSheet, Text, View } from 'react-native';
 class DeckItem extends Component {
 
 	render(){
+		const {title, questions} = this.props
 		return (
 			<View style={styles.deck}>
 				<Text style={styles.deckTitle}>
-					Deck Item Title
+					{title}
 				</Text>
 				<Text style={styles.deckCount}>
-					10 cards
+					{questions.length} cards
 				</Text>
 			</View>
 		)
@@ -18,28 +19,35 @@ class DeckItem extends Component {
 }
 
 const styles = StyleSheet.create({
+	title: {
+		fontSize: 38,
+		fontWeight: "700",
+		marginLeft: '5%',
+		marginTop: 15,
+		marginBottom: 15
+	},
 	deck: {
 		backgroundColor: '#fff',
 		borderRadius: 16,
 		justifyContent: 'center',
 		alignItems: 'center',
-		width: '95%',
+		width: '90%',
 		padding: 20,
 		marginTop: 15,
-		marginBottom: 15,
+		marginBottom: 10,
 		marginLeft: 'auto',
 		marginRight: 'auto',
-		shadowRadius: 3,
-		shadowOpacity: 0.8, 
-		shadowColor: 'rgba(0, 0, 0, 0.24)',
+		shadowRadius: 7,
+		shadowColor: 'rgba(0, 0, 0, 0.9)',
 		shadowOffset: {
-	        width: 0,
-	        height: 3
+	        width: 2,
+	        height: 5
 	    },
 	},
 	deckTitle: {
 		fontSize: 32,
-		color: '#011627'
+		color: '#011627',
+		fontWeight: '500'
 	},
 	deckCount: {
 		fontSize: 16,
