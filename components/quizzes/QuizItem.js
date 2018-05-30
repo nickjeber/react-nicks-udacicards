@@ -5,23 +5,96 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-nativ
 
 class QuizItem extends Component {
 	state = {
+		flipped: false,
 		index: 0,
-		score: 0
+		score: 0,
 	}
+
+	resetQuiz = () => {
+		this.setState(()=> ({
+			flipped: false,
+			index: 0,
+			score: 0
+		}))
+	}
+
+	calculateScore = () => {
+		const { score } = this.state
+		const { deck } = this.props
+
+		return Math.round(score/deck.questions.length * 100)
+		
+	}
+
+	flipCard = () => {
+		this.setState((currentState)=> ({
+			flipped: !currentState.flipped,
+		}))
+	}
+
+	handleAnswer = answer => {
+		this.setState((currentState)=> ({
+			score: answer ? currentState.score + 1 : currentState.score,
+			index: currentState.index + 1,
+			flipped: false,
+		}))
+	}
+
 	render(){
-		const {deck} = this.props
+		const {deck, navigation} = this.props
 		const {index} = this.state
+
+		if (index >= deck.questions.length ) {
+			return (
+				<View style={styles.deck}>
+					<Text style={styles.question}>
+						Score: {this.calculateScore()}%
+					</Text>
+					<Text style={styles.deckCount}>
+						Congrats! You completed the quiz!
+					</Text>
+					<View style={styles.buttonContainer}>
+						<TouchableOpacity 
+							style={[styles.button, styles.resetButton]}
+							onPress={this.resetQuiz}
+						>
+							<Text style={styles.resetButtonText}>
+								Reset
+							</Text>
+						</TouchableOpacity>
+						<TouchableOpacity 
+							style={[styles.button, styles.correctButton]}
+							onPress={() => navigation.pop()}
+						>
+							<Text style={styles.buttonText}>
+								Go Back
+							</Text>
+						</TouchableOpacity>
+					</View>
+				</View>
+			)
+		}
+
 		return (
 			<View style={styles.deck}>
 				<Text style={styles.question}>
-					{deck.questions[index].question}
+					{this.state.flipped? deck.questions[index].answer : deck.questions[index].question}
 				</Text>
 				<Text style={styles.deckCount}>
-					{deck.questions.length - index+1} questions left
+					{deck.questions.length - (index+1)} questions left
 				</Text>
 				<View style={styles.buttonContainer}>
+					<TouchableOpacity
+						style={[styles.button, styles.flipButton]}
+						onPress={this.flipCard}
+					>
+						<Text style={styles.buttonText}>
+							{this.state.flipped ? "Show Question" : "Show Answer"}
+						</Text>
+					</TouchableOpacity>
 					<TouchableOpacity 
 						style={[styles.button, styles.correctButton]}
+						onPress={() => this.handleAnswer(true)}
 					>
 						<Text style={styles.buttonText}>
 							Correct
@@ -29,6 +102,7 @@ class QuizItem extends Component {
 					</TouchableOpacity>
 					<TouchableOpacity 
 						style={[styles.button, styles.incorrectButton]}
+						onPress={() => this.handleAnswer(false)}
 					>
 						<Text style={styles.buttonText}>
 							Incorrect
@@ -98,6 +172,21 @@ const styles = StyleSheet.create({
 	correctButton: {
 		backgroundColor: '#2EC4B6',
 		borderColor: '#2EC4B6',
+		borderWidth: 5,
+	},
+	resetButton: {
+		backgroundColor: 'transparent',
+		borderColor: '#FF9F1C',
+		borderWidth: 5,
+	},
+	resetButtonText: {
+		color: '#FF9F1C',
+		fontSize: 20,
+		fontWeight: '500',
+	},
+	flipButton: {
+		backgroundColor: "#011627",
+		borderColor: '#011627',
 		borderWidth: 5,
 	},
 	buttonText: {
