@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, 
+		 TextInput, TouchableOpacity } from 'react-native';
+import { clearLocalNotification, setLocalNotification } from "../../utils/helpers"
 
 
 class QuizItem extends Component {
@@ -45,6 +47,9 @@ class QuizItem extends Component {
 		const {index} = this.state
 
 		if (index >= deck.questions.length ) {
+			
+			clearLocalNotification().then(setLocalNotification)
+
 			return (
 				<View style={styles.deck}>
 					<Text style={styles.question}>

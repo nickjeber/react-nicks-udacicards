@@ -10,6 +10,7 @@ import CardNew from './components/cards/CardNew';
 import QuizItem from './components/quizzes/QuizItem';
 import { StyleSheet, Text, View } from 'react-native';
 import { createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation';
+import { setLocalNotification } from './utils/helpers';
 
 const StackNavigator = createStackNavigator({
   Home: {
@@ -52,6 +53,11 @@ const StackNavigator = createStackNavigator({
 const store = createStore(reducer);
 
 export default class App extends React.Component {
+
+  componentDidMount(){
+    setLocalNotification()
+  }
+  
   render() {
     return (
       <Provider store={store}>
