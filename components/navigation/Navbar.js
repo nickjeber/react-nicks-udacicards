@@ -1,12 +1,13 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux';
 import { Text, StyleSheet, View, TouchableOpacity } from 'react-native'
-import { createMaterialTopTabNavigator, DrawerNavigator } from 'react-navigation';
+import { createMaterialTopTabNavigator, createDrawerNavigator } from 'react-navigation';
 import { FontAwesome,
 		 MaterialIcons, 
 		 MaterialCommunityIcons, 
 		 Entypo } from '@expo/vector-icons'
 import DeckList from '../decks/DeckList';
+import DeckNew from '../decks/DeckNew';
 
 const styles = StyleSheet.create({
 	navbar: {
@@ -35,8 +36,8 @@ const Tabs = createMaterialTopTabNavigator({
   Decks: {
     screen: DeckList,
   },
-  Quizzes: {
-    screen: DeckList,
+  New: {
+    screen: DeckNew,
   }
   }, 
   {
@@ -61,6 +62,15 @@ const Tabs = createMaterialTopTabNavigator({
     }
   }
 })
+
+const Drawer = createDrawerNavigator({
+  Home: {
+    screen: DeckList
+  },
+  New: {
+    screen: DeckNew,
+  }
+});
 
 class Navbar extends Component{
   handleNewDeckNavigation = () => {
