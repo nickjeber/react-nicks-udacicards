@@ -4,12 +4,13 @@ import { receiveDecks } from '../../actions/decks';
 import { AppLoading} from 'expo'
 import DeckItem from './DeckItem';
 import { fetchDecks } from "../../utils/api";
-import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity, Animated } from 'react-native';
 
 class DeckList extends Component {
 
 	state = {
 		ready: false,
+		opacityValue: new Animated.Value(0)
 	}
 
 	componentDidMount() {
@@ -17,6 +18,11 @@ class DeckList extends Component {
 		fetchDecks()
 		.then((decks) => dispatch(receiveDecks(decks)))
 		.then(() => this.setState(() => ({ready: true})))
+
+		Animated.timing(this.state.opacityValue, {
+	      toValue: 1,
+	      duration: 1500
+	    }).start()
 	}
 
 	handleDeckNavigation = title => {
@@ -27,6 +33,7 @@ class DeckList extends Component {
 
 	render(){
 		const { decks } = this.props
+		const { opacityValue } = this.state
 
 		if (!this.state.ready){
 			return <AppLoading />
@@ -39,14 +46,14 @@ class DeckList extends Component {
 				data={decks}
 				renderItem={({ item }) => (
 					<TouchableOpacity onPress={() => this.handleDeckNavigation(item.title)}>
-						<View style={styles.deck}>
+						<Animated.View style={[styles.deck, {opacity: opacityValue}]}>
 							<Text style={styles.deckTitle}>
 								{item.title}
 							</Text>
 							<Text style={styles.deckCount}>
 								 {item.questions.length} cards
 							</Text>
-						</View>
+						</Animated.View>
 					</TouchableOpacity>
 				)}
 				keyExtractor={item => item.title}
