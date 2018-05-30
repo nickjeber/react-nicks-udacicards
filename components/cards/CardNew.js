@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, 
+		 View, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { addCard } from '../../actions/decks';
 import { saveCard } from "../../utils/api";
 
@@ -27,7 +28,9 @@ class CardNew extends Component {
 
 	render(){
 		return (
-			<View>
+			<KeyboardAvoidingView
+				behavior="padding"
+			>
 				<Text style={styles.title}>
 					New Card
 				</Text>
@@ -37,12 +40,14 @@ class CardNew extends Component {
 						underlineColorAndroid="transparent" 
 						onChangeText={question => this.setState(() => ({ question }))}
 						value={this.state.question}
+						placeholder="Question Goes Here"
 					/>
 					<TextInput 
 						style={styles.input}
 						underlineColorAndroid="transparent" 
 						onChangeText={answer => this.setState(() => ({ answer }))}
 						value={this.state.answer}
+						placeholder="Answer Goes Here"
 					/>
 					<TouchableOpacity 
 						style={[styles.button, styles.submitButton]}
@@ -54,7 +59,7 @@ class CardNew extends Component {
 						</Text>
 					</TouchableOpacity>
 				</View>
-			</View>
+			</KeyboardAvoidingView>
 		)
 	}
 }
@@ -92,7 +97,8 @@ const styles = StyleSheet.create({
 	    width: 200,
 	    borderBottomWidth: 1,
 	    borderColor: "#ddd",
-	    fontSize: 24,
+	    fontSize: 20,
+	    textAlign: 'center',
 	},
 	button: {
 		width: 150,
