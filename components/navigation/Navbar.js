@@ -36,9 +36,6 @@ const Tabs = createMaterialTopTabNavigator({
   Decks: {
     screen: DeckList,
   },
-  New: {
-    screen: DeckNew,
-  }
   }, 
   {
     navigationOptions: {
