@@ -4,13 +4,15 @@ import { receiveDecks } from '../../actions/decks';
 import { AppLoading} from 'expo'
 import DeckItem from './DeckItem';
 import { fetchDecks } from "../../utils/api";
-import { StyleSheet, Text, View, FlatList, TouchableOpacity, Animated } from 'react-native';
+import { globalStyles } from '../../utils/styles';
+import { Text, View, FlatList, TouchableOpacity, Animated } from 'react-native';
 
 class DeckList extends Component {
 
 	state = {
 		ready: false,
-		opacityValue: new Animated.Value(0)
+		opacity: new Animated.Value(0),
+		width: new Animated.Value(0)
 	}
 
 	componentDidMount() {
@@ -19,13 +21,26 @@ class DeckList extends Component {
 		.then((decks) => dispatch(receiveDecks(decks)))
 		.then(() => this.setState(() => ({ready: true})))
 
-		Animated.timing(this.state.opacityValue, {
+		Animated.timing(this.state.opacity, {
 	      toValue: 1,
 	      duration: 1500
 	    }).start()
 	}
 
+	componentWillUpdate(){
+		Animated.spring(this.state.width, {
+			toValue: 330, 
+			speed: 5
+		}).start()
+	}
+
 	handleDeckNavigation = title => {
+
+		Animated.timing(this.state.width, {
+	      toValue: 0,
+	      duration: 250
+	    }).start()
+
 		this.props.navigation.navigate("DeckItem", {
 			deckTitle: title
 		})
@@ -33,24 +48,24 @@ class DeckList extends Component {
 
 	render(){
 		const { decks } = this.props
-		const { opacityValue } = this.state
+		const { opacity, width } = this.state
 
 		if (!this.state.ready){
 			return <AppLoading />
 		}
 
 		return (
-			<View>
-				<Text style={styles.title}>Decks</Text>
+			<View style={{paddingBottom: 100}}>
+				<Text style={globalStyles.title}>Decks</Text>
 				<FlatList
 				data={decks}
 				renderItem={({ item }) => (
 					<TouchableOpacity onPress={() => this.handleDeckNavigation(item.title)}>
-						<Animated.View style={[styles.deck, {opacity: opacityValue}]}>
-							<Text style={styles.deckTitle}>
+						<Animated.View style={[globalStyles.deck, {opacity, width}]}>
+							<Text style={globalStyles.deckTitle}>
 								{item.title}
 							</Text>
-							<Text style={styles.deckCount}>
+							<Text style={globalStyles.deckCount}>
 								 {item.questions.length} cards
 							</Text>
 						</Animated.View>
@@ -62,43 +77,6 @@ class DeckList extends Component {
 		)
 	}
 }
-
-const styles = StyleSheet.create({
-	title: {
-		fontSize: 38,
-		fontWeight: "700",
-		marginLeft: '5%',
-		marginTop: 15,
-		marginBottom: 15
-	},
-	deck: {
-		backgroundColor: '#fff',
-		borderRadius: 16,
-		justifyContent: 'center',
-		alignItems: 'center',
-		width: '90%',
-		padding: 20,
-		marginTop: 15,
-		marginBottom: 10,
-		marginLeft: 'auto',
-		marginRight: 'auto',
-		shadowRadius: 7,
-		shadowColor: 'rgba(0, 0, 0, 0.9)',
-		shadowOffset: {
-	        width: 2,
-	        height: 5
-	    },
-	},
-	deckTitle: {
-		fontSize: 32,
-		color: '#011627',
-		fontWeight: '500'
-	},
-	deckCount: {
-		fontSize: 16,
-		color: '#999'
-	}
-})
 
 function mapStateToProps (state) {
   const decks = Object.values(state.decks)

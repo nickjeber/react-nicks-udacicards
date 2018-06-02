@@ -8,10 +8,11 @@ import { FontAwesome,
 		 Entypo } from '@expo/vector-icons'
 import DeckList from '../decks/DeckList';
 import DeckNew from '../decks/DeckNew';
+import { white, yellow, base } from '../../utils/colors';
 
 const styles = StyleSheet.create({
 	navbar: {
-		backgroundColor: '#011627',
+		backgroundColor: base,
 		height: 90,
 		display: 'flex',
 		flexDirection: 'row',
@@ -23,11 +24,11 @@ const styles = StyleSheet.create({
 		paddingBottom: 20,
 	},
 	title: {
-		color: '#ffffff',
+		color: white,
 		fontSize: 20,
 	},
 	icon: {
-		color: '#fff',
+		color: white,
 	},
 
 })
@@ -43,11 +44,11 @@ const Tabs = createMaterialTopTabNavigator({
   },
   tabBarOptions: {
     indicatorStyle: {
-      backgroundColor: '#fff',
+      backgroundColor: white,
     },
-    activeTintColor: '#FF9F1C',
+    activeTintColor: yellow,
     style: {
-      backgroundColor: '#011627',
+      backgroundColor: base,
       height: 56,
       shadowColor: 'rgba(0, 0, 0, 0.24)',
       shadowOffset: {
@@ -79,7 +80,7 @@ class Navbar extends Component{
 		    <View style={styles.navbar}>
 		    	<MaterialCommunityIcons
 		              name='menu'
-		              style={styles.icon}
+		              style={styles.icon, {opacity: 0}}
 		              size={32}
 		            />
 		    	<Text style={styles.title}>

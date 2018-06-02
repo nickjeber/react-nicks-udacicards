@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
+import { globalStyles } from '../../utils/styles';
+import { green, white, yellow } from '../../utils/colors';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 class DeckItem extends Component {
@@ -16,16 +18,16 @@ class DeckItem extends Component {
 	render(){
 		const {deck} = this.props
 		return (
-			<View style={styles.deck}>
-				<Text style={styles.deckTitle}>
+			<View style={globalStyles.deck}>
+				<Text style={globalStyles.deckTitle}>
 					{deck.title}
 				</Text>
-				<Text style={styles.deckCount}>
+				<Text style={globalStyles.deckCount}>
 					 {deck.questions.length} Cards
 				</Text>
 				<View style={styles.buttonContainer}>
 					<TouchableOpacity 
-						style={[styles.button, styles.addButton]}
+						style={[globalStyles.button, styles.addButton]}
 						onPress={() => this.handleNewCardNavigation(deck.title)}
 						>
 						<Text style={styles.addButtonText}>
@@ -33,7 +35,7 @@ class DeckItem extends Component {
 						</Text>
 					</TouchableOpacity>
 					<TouchableOpacity 
-						style={[styles.button, styles.startButton]}
+						style={[globalStyles.button, styles.startButton]}
 						onPress={() => this.handleStartQuizNavigation(deck.title)}
 						>
 						<Text style={styles.startButtonText}>
@@ -47,63 +49,26 @@ class DeckItem extends Component {
 }
 
 const styles = StyleSheet.create({
-	deck: {
-		backgroundColor: '#fff',
-		borderRadius: 16,
-		justifyContent: 'center',
-		alignItems: 'center',
-		width: '90%',
-		padding: 20,
-		marginTop: 15,
-		marginBottom: 10,
-		marginLeft: 'auto',
-		marginRight: 'auto',
-		shadowRadius: 7,
-		shadowColor: 'rgba(0, 0, 0, 0.9)',
-		shadowOffset: {
-	        width: 2,
-	        height: 5
-	    },
-	},
-	deckTitle: {
-		fontSize: 42,
-		color: '#011627',
-		fontWeight: '500'
-	},
-	deckCount: {
-		fontSize: 22,
-		color: '#999'
-	},
 	buttonContainer: {
 		marginTop: 60
 	},
-	button: {
-		width: 200,
-		paddingTop: 20,
-		paddingBottom: 20,
-		marginTop: 10,
-		marginBottom: 10,
-		borderRadius: 30,
-		alignItems: 'center',
-		justifyContent: 'center'
-	},
 	addButton: {
 		backgroundColor: 'transparent',
-		borderColor: '#FF9F1C',
+		borderColor: yellow,
 		borderWidth: 5,
 	},
 	addButtonText: {
-		color: '#FF9F1C',
+		color: yellow,
 		fontSize: 20,
 		fontWeight: '500'
 	},
 	startButton: {
-		backgroundColor: '#2EC4B6',
-		borderColor: '#2EC4B6',
+		backgroundColor: green,
+		borderColor: green,
 		borderWidth: 5,
 	},
 	startButtonText: {
-		color: '#fff',
+		color: white,
 		fontSize: 20,
 		fontWeight: '500'
 	},

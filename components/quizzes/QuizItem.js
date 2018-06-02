@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, View, 
 		 TextInput, TouchableOpacity } from 'react-native';
 import { clearLocalNotification, setLocalNotification } from "../../utils/helpers"
-
+import { globalStyles } from '../../utils/styles';
+import { green, white, yellow, red, base, border } from '../../utils/colors';
 
 class QuizItem extends Component {
 	state = {
@@ -51,16 +52,16 @@ class QuizItem extends Component {
 			clearLocalNotification().then(setLocalNotification)
 
 			return (
-				<View style={styles.deck}>
+				<View style={globalStyles.deck}>
 					<Text style={styles.question}>
 						Score: {this.calculateScore()}%
 					</Text>
-					<Text style={styles.deckCount}>
+					<Text style={globalStyles.deckCount}>
 						Congrats! You completed the quiz!
 					</Text>
 					<View style={styles.buttonContainer}>
 						<TouchableOpacity 
-							style={[styles.button, styles.resetButton]}
+							style={[globalStyles.button, styles.resetButton]}
 							onPress={this.resetQuiz}
 						>
 							<Text style={styles.resetButtonText}>
@@ -68,7 +69,7 @@ class QuizItem extends Component {
 							</Text>
 						</TouchableOpacity>
 						<TouchableOpacity 
-							style={[styles.button, styles.correctButton]}
+							style={[globalStyles.button, styles.correctButton]}
 							onPress={() => navigation.pop()}
 						>
 							<Text style={styles.buttonText}>
@@ -81,16 +82,16 @@ class QuizItem extends Component {
 		}
 
 		return (
-			<View style={styles.deck}>
+			<View style={globalStyles.deck}>
 				<Text style={styles.question}>
 					{this.state.flipped? deck.questions[index].answer : deck.questions[index].question}
 				</Text>
-				<Text style={styles.deckCount}>
+				<Text style={globalStyles.deckCount}>
 					{deck.questions.length - (index+1)} questions left
 				</Text>
 				<View style={styles.buttonContainer}>
 					<TouchableOpacity
-						style={[styles.button, styles.flipButton]}
+						style={[globalStyles.button, styles.flipButton]}
 						onPress={this.flipCard}
 					>
 						<Text style={styles.buttonText}>
@@ -98,7 +99,7 @@ class QuizItem extends Component {
 						</Text>
 					</TouchableOpacity>
 					<TouchableOpacity 
-						style={[styles.button, styles.correctButton]}
+						style={[globalStyles.button, styles.correctButton]}
 						onPress={() => this.handleAnswer(true)}
 					>
 						<Text style={styles.buttonText}>
@@ -106,7 +107,7 @@ class QuizItem extends Component {
 						</Text>
 					</TouchableOpacity>
 					<TouchableOpacity 
-						style={[styles.button, styles.incorrectButton]}
+						style={[globalStyles.button, styles.incorrectButton]}
 						onPress={() => this.handleAnswer(false)}
 					>
 						<Text style={styles.buttonText}>
@@ -127,75 +128,38 @@ const styles = StyleSheet.create({
 	},
 	questionCount: {
 		fontSize: 22,
-		color: '#999'
-	},
-	deck: {
-		backgroundColor: '#fff',
-		borderRadius: 16,
-		justifyContent: 'center',
-		alignItems: 'center',
-		width: '90%',
-		padding: 20,
-		marginTop: 15,
-		marginBottom: 10,
-		marginLeft: 'auto',
-		marginRight: 'auto',
-		shadowRadius: 7,
-		shadowColor: 'rgba(0, 0, 0, 0.9)',
-		shadowOffset: {
-	        width: 2,
-	        height: 5
-	    },
-	},
-	input: {
-	    margin: 25,
-	    height: 80,
-	    backgroundColor: "#fff",
-	    width: 200,
-	    borderBottomWidth: 1,
-	    borderColor: "#ddd",
-	    fontSize: 24,
-	},
-	button: {
-		width: 200,
-		paddingTop: 20,
-		paddingBottom: 20,
-		marginTop: 10,
-		marginBottom: 10,
-		borderRadius: 30,
-		alignItems: 'center',
-		justifyContent: 'center'
+		color: border
 	},
 	buttonContainer: {
 		marginTop: 60
 	},
 	incorrectButton: {
-		backgroundColor: '#E71D36',
-		borderColor: '#E71D36',
+		backgroundColor: red,
+		borderColor: red,
 		borderWidth: 5,
 	},
 	correctButton: {
-		backgroundColor: '#2EC4B6',
-		borderColor: '#2EC4B6',
+		backgroundColor: green,
+		borderColor: green,
 		borderWidth: 5,
 	},
 	resetButton: {
 		backgroundColor: 'transparent',
-		borderColor: '#FF9F1C',
+		borderColor: yellow,
 		borderWidth: 5,
 	},
 	resetButtonText: {
-		color: '#FF9F1C',
+		color: yellow,
 		fontSize: 20,
 		fontWeight: '500',
 	},
 	flipButton: {
-		backgroundColor: "#011627",
-		borderColor: '#011627',
+		backgroundColor: base,
+		borderColor: base,
 		borderWidth: 5,
 	},
 	buttonText: {
-		color: '#fff',
+		color: white,
 		fontSize: 20,
 		fontWeight: '500'
 	},
