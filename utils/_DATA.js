@@ -1,33 +1,32 @@
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage } from "react-native";
 
+export const FLASHCARDS_STORAGE_KEY = "Flashcards:decks";
 
-export const FLASHCARDS_STORAGE_KEY = 'Flashcards:decks';
-
-export function setData(){
-    const decks = {
-      React: {
-        title: 'React',
-        questions: [
-          {
-            question: 'What is React?',
-            answer: 'A library for managing user interfaces'
-          },
-          {
-            question: 'Where do you make Ajax requests in React?',
-            answer: 'The componentDidMount lifecycle event'
-          }
-        ]
-      },
-      JavaScript: {
-        title: 'JavaScript',
-        questions: [
-          {
-            question: 'What is a closure?',
-            answer: 'The combination of a function and the lexical environment within which that function was declared.'
-          }
-        ]
-      }
+export function setData() {
+  const decks = {
+    Math: {
+      title: "Math",
+      questions: [
+        {
+          question: "1+1",
+          answer: "2"
+        },
+        {
+          question: "2+2",
+          answer: "4"
+        }
+      ]
+    },
+    Science: {
+      title: "Science",
+      questions: [
+        {
+          question: "What do cows eat?",
+          answer: "Grass"
+        }
+      ]
     }
-    AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(decks))
-    return decks
+  };
+  AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(decks));
+  return decks;
 }
